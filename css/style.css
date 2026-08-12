@@ -315,15 +315,12 @@ ul { list-style: none; margin: 0; padding: 0; }
   border: 2px solid var(--accent);
 }
 
-.photo-placeholder {
+.photo-img {
+  display: block;
+  width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--accent-dim);
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-family: monospace;
+  object-fit: cover;
+  object-position: center 25%;
 }
 
 /* ---------- skills ---------- */
