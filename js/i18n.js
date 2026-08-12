@@ -5,7 +5,7 @@
 (function () {
   const translations = {
     en: {
-      "meta.title": "Ariel Kalambay — Portfolio",
+      "meta.title": "arielportofolio",
       "meta.description": "Personal portfolio of Ariel Kalambay, developer.",
       "nav.home": "Home",
       "nav.about": "About",
@@ -43,7 +43,7 @@
       "footer.prefix": "Designed & built by"
     },
     ru: {
-      "meta.title": "Ариэль Каламбай — Портфолио",
+      "meta.title": "arielportofolio",
       "meta.description": "Личное портфолио разработчика Ариэля Каламбая.",
       "nav.home": "Главная",
       "nav.about": "Обо мне",
@@ -81,7 +81,7 @@
       "footer.prefix": "Разработано"
     },
     fr: {
-      "meta.title": "Ariel Kalambay — Portfolio",
+      "meta.title": "arielportofolio",
       "meta.description": "Portfolio personnel d'Ariel Kalambay, développeur.",
       "nav.home": "Accueil",
       "nav.about": "À propos",
