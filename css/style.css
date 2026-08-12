@@ -216,7 +216,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  filter: grayscale(85%) contrast(1.05);
+  filter: grayscale(100%) contrast(1.05);
 }
 
 .hero-art-tag {
@@ -598,7 +598,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 /* ---------- responsive ---------- */
-@media (max-width: 960px) {
+@media (max-width: 680px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-art { min-height: 280px; order: -1; }
   .hero-content { max-width: none; }
