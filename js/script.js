@@ -15,22 +15,24 @@
   // ---- footer year ----
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ---- theme (persisted) ----
+  // ---- theme (persisted, defaults to light) ----
   const savedTheme = localStorage.getItem('portfolio-theme');
-  if (savedTheme) {
-    root.setAttribute('data-theme', savedTheme);
-    themeToggle.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+  if (savedTheme === 'dark') {
+    root.setAttribute('data-theme', 'dark');
+    themeToggle.textContent = '☀️';
+  } else {
+    themeToggle.textContent = '🌙';
   }
 
   themeToggle.addEventListener('click', function () {
-    const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    const next = current === 'light' ? 'dark' : 'light';
+    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
     if (next === 'dark') {
-      root.removeAttribute('data-theme');
+      root.setAttribute('data-theme', 'dark');
     } else {
-      root.setAttribute('data-theme', 'light');
+      root.removeAttribute('data-theme');
     }
-    themeToggle.textContent = next === 'light' ? '☀️' : '🌙';
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
     localStorage.setItem('portfolio-theme', next);
   });
 
