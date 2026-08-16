@@ -441,9 +441,9 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: min(100%, 430px);
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: center 12%;
   border-radius: 200px 200px 26px 26px;
-  filter: grayscale(100%) contrast(1.08) brightness(1.02);
+  filter: grayscale(100%) contrast(1.06) brightness(1.03);
 }
 
 .hero-art-tag {
