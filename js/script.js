@@ -16,13 +16,17 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // ---- theme (persisted, defaults to light) ----
-  const savedTheme = localStorage.getItem('portfolio-theme');
-  if (savedTheme === 'dark') {
-    root.setAttribute('data-theme', 'dark');
-    themeToggle.textContent = '☀️';
-  } else {
-    themeToggle.textContent = '🌙';
+  // The toggle holds a moon + sun SVG; CSS shows the right one per theme.
+  function syncThemeLabel(theme) {
+    themeToggle.setAttribute(
+      'aria-label',
+      theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+    );
   }
+
+  const savedTheme = localStorage.getItem('portfolio-theme');
+  if (savedTheme === 'dark') root.setAttribute('data-theme', 'dark');
+  syncThemeLabel(savedTheme === 'dark' ? 'dark' : 'light');
 
   themeToggle.addEventListener('click', function () {
     const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
@@ -32,7 +36,7 @@
     } else {
       root.removeAttribute('data-theme');
     }
-    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    syncThemeLabel(next);
     localStorage.setItem('portfolio-theme', next);
   });
 
@@ -67,7 +71,7 @@
 
   // ---- reveal-on-scroll for sections ----
   const revealTargets = document.querySelectorAll(
-    '.section-title, .about-grid, .skill-card, .project-card, .contact-desc, .btn-large, .social-links'
+    '.section-head, .about-grid, .skill-card, .project-card, .contact-desc, .social-icons'
   );
   revealTargets.forEach(function (el) { el.classList.add('reveal'); });
 
