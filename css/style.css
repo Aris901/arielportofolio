@@ -610,7 +610,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: center 25%;
+  object-position: center 42%;
 }
 
 /* ---------- skills (corner-bracket cards) ---------- */
