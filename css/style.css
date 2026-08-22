@@ -866,14 +866,101 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 .back-to-top.visible:hover { transform: translateY(-3px); }
 
-/* ---------- reveal-on-scroll ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+/* ===========================================================
+   MOTION SYSTEM
+   One easing curve and one duration scale across the whole site, so
+   everything feels like it belongs to the same object rather than a pile
+   of separate effects. --reveal-delay is set per element by script.js to
+   stagger groups.
+   =========================================================== */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.18s;
+  --dur-mid: 0.32s;
+  --dur-slow: 0.7s;
 }
 
-.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view { opacity: 1; transform: none; will-change: auto; }
+
+.reveal-from-left { transform: translateX(-28px); }
+.reveal-from-right { transform: translateX(28px); }
+.reveal-pop { transform: scale(0.82); transition-timing-function: var(--ease-spring); }
+
+/* ---------- ripple on primary actions ---------- */
+.btn-pill, .btn-dark, .btn-primary { position: relative; overflow: hidden; }
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.28;
+  transform: scale(0);
+  animation: rippleOut 0.6s var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleOut {
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+/* ---------- nav underline + current-section marker ---------- */
+.nav-links a.is-current { color: var(--on-green); }
+.nav-links a.is-current::after { transform: scaleX(1); }
+
+/* the animated hamburger becomes an X while the menu is open */
+.nav-toggle span {
+  transition: transform var(--dur-mid) var(--ease-out), opacity var(--dur-fast) ease;
+}
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- card and link micro-interactions ---------- */
+.skill-card .icon-tile {
+  transition: transform var(--dur-mid) var(--ease-spring),
+              background var(--dur-mid) ease,
+              color var(--dur-mid) ease;
+}
+.skill-card:hover .icon-tile {
+  transform: translateY(-4px) rotate(-6deg) scale(1.06);
+  background: var(--orange);
+  color: var(--ink);
+}
+
+.project-card .project-thumb svg {
+  transition: transform var(--dur-mid) var(--ease-spring);
+}
+.project-card:hover .project-thumb svg { transform: scale(1.14) rotate(-5deg); }
+
+/* project links grow an arrow on hover */
+.project-links a { position: relative; }
+.project-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%; bottom: -3px;
+  height: 1.5px;
+  background: var(--orange);
+  transition: right var(--dur-mid) var(--ease-out);
+}
+.project-links a:hover::after { right: 0; }
+
+/* the hero photo drifts a little as the page scrolls (set by script.js) */
+.hero-photo { will-change: transform; }
+.hero-art { transform: translateY(var(--parallax, 0px)); transition: transform 0.1s linear; }
+
+/* stat figures settle in with their counter */
+.stat strong { font-variant-numeric: tabular-nums; }
 
 /* ===========================================================
    RESPONSIVE — 1440 / 1024 / 768 / 375
@@ -946,5 +1033,155 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   }
 
   .scroll-cue { transform: translateX(-50%); }
-  .reveal { opacity: 1; transform: none; transition: none; }
+
+  /* Reveals land in their finished state; no drift, no ripple, no parallax. */
+  .reveal,
+  .reveal-from-left,
+  .reveal-from-right,
+  .reveal-pop {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-art { transform: none; }
+  .ripple { display: none; }
+
+  /* Hover feedback stays, but as colour rather than movement. */
+  .skill-card:hover,
+  .project-card:hover,
+  .btn-pill:hover,
+  .btn-dark:hover,
+  .social-icon:hover,
+  .back-to-top:hover { transform: none; }
+
+  .skill-card:hover .icon-tile,
+  .project-card:hover .project-thumb svg { transform: none; }
 }
+
+/* ===========================================================
+   POLISH
+   Depth, texture and typographic refinement. Layered shadows read as
+   real elevation where a single flat shadow reads as a sticker.
+   =========================================================== */
+
+/* ---------- layered elevation ---------- */
+.skill-card,
+.project-card {
+  box-shadow:
+    0 1px 2px rgba(22, 51, 42, 0.05),
+    0 8px 20px -14px rgba(22, 51, 42, 0.22);
+}
+
+.skill-card:hover,
+.project-card:hover {
+  box-shadow:
+    0 2px 4px rgba(22, 51, 42, 0.05),
+    0 18px 34px -18px rgba(22, 51, 42, 0.3);
+}
+
+[data-theme="dark"] .skill-card,
+[data-theme="dark"] .project-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 26px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- hero: soft light behind the panel ---------- */
+.hero-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* inherit the panel's rounded bottom, or the glow paints square corners */
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 50% at 78% 18%, rgba(126, 214, 174, 0.14), transparent 62%),
+    radial-gradient(ellipse 55% 45% at 12% 78%, rgba(242, 160, 61, 0.10), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero, .navbar, .hero-notch, .scroll-cue { position: relative; z-index: 1; }
+.navbar { z-index: 1000; }
+
+/* ---------- section headings get a small gold rule ---------- */
+.section-head .kicker { position: relative; padding-left: 2.4rem; }
+
+.section-head .kicker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.8rem;
+  height: 2px;
+  background: var(--orange);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out) 0.15s;
+}
+
+.section-head.in-view .kicker::before,
+.reveal.in-view .kicker::before { transform: translateY(-50%) scaleX(1); }
+
+.section-head.center .kicker { padding-left: 0; }
+.section-head.center .kicker::before { display: none; }
+
+/* ---------- about list ticks fill in on reveal ---------- */
+.about-list li::before {
+  transition: background var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-spring);
+}
+.about-list li:hover::before { background: var(--orange); transform: scale(1.25); }
+
+/* ---------- photo frame gets a gentle zoom ---------- */
+.photo-frame { overflow: hidden; }
+.photo-img { transition: transform 0.9s var(--ease-out); }
+.photo-frame:hover .photo-img { transform: scale(1.045); }
+
+/* ---------- tag pills ---------- */
+.tag-list li {
+  transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.project-card:hover .tag-list li {
+  background: rgba(242, 160, 61, 0.16);
+  color: var(--heading);
+}
+
+/* ---------- contact panel: quiet texture ---------- */
+.contact-block { position: relative; overflow: hidden; }
+
+.contact-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 20% 0%, rgba(126, 214, 174, 0.12), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 85% 100%, rgba(242, 160, 61, 0.10), transparent 60%);
+  pointer-events: none;
+}
+
+.contact-inner { position: relative; z-index: 1; }
+
+/* ---------- social icons lift in sequence ---------- */
+.social-icon { transition: all var(--dur-mid) var(--ease-spring); }
+
+/* ---------- footer ---------- */
+.site-footer { position: relative; }
+
+/* ---------- selection + scrollbar ---------- */
+::selection { background: var(--orange); color: var(--ink); }
+
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: var(--page-alt); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 99px;
+    border: 3px solid var(--page-alt);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+}
+
+/* ---------- typography refinement ---------- */
+.hero-name, .section-title, .contact-title { text-wrap: balance; }
+.hero-desc, .section-desc, .about-text p { text-wrap: pretty; }
+
+/* Keep the progress bar above the fixed nav. */
+.progress-bar { z-index: 1200; }
