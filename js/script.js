@@ -28,9 +28,17 @@
     );
   }
 
+  // Dark is the default because the aurora backdrop is built for a dark
+  // surface. The attribute is already on <html> to avoid a flash of the
+  // light theme before this runs, so only an explicit 'light' choice
+  // removes it.
   const savedTheme = localStorage.getItem('portfolio-theme');
-  if (savedTheme === 'dark') root.setAttribute('data-theme', 'dark');
-  syncThemeLabel(savedTheme === 'dark' ? 'dark' : 'light');
+  if (savedTheme === 'light') {
+    root.removeAttribute('data-theme');
+  } else {
+    root.setAttribute('data-theme', 'dark');
+  }
+  syncThemeLabel(savedTheme === 'light' ? 'light' : 'dark');
 
   themeToggle.addEventListener('click', function () {
     const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';

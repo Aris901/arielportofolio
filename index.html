@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- The aurora backdrop is tuned for a dark surface, so dark is the default.
+     script.js drops this attribute if the visitor has chosen light. -->
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +14,37 @@
 <link rel="icon" type="image/svg+xml" href="img/logo.svg">
 </head>
 <body>
+
+<!-- ===========================================================
+     Aurora Borealis backdrop.
+     Fixed behind the whole page. The base colour sits on .aura-base
+     rather than on the container, so the blend modes composite against
+     it inside this stacking context (a fixed element forms one, so the
+     body background alone would not reach the layers).
+     =========================================================== -->
+<div class="aura-bg" aria-hidden="true">
+  <div class="aura-base"></div>
+  <div class="aura-layer aura-layer-1"></div>
+  <div class="aura-layer aura-layer-2"></div>
+  <div class="aura-layer aura-layer-3"></div>
+  <div class="aura-layer aura-layer-4"></div>
+  <div class="aura-layer aura-layer-5"></div>
+  <div class="aura-layer aura-layer-6"></div>
+  <!-- Readability scrim: layers 1 and 2 carry pure-white stops, and because
+       the backdrop is fixed those bright bands would sit permanently across
+       the middle of the viewport, under body copy. This tames them without
+       altering the gradient's colours. -->
+  <div class="aura-scrim"></div>
+  <div class="aura-grain">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <filter id="auraGrain">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch"/>
+        <feColorMatrix type="matrix" values="0.181 0.608 0.061 0 0.075 0.181 0.608 0.061 0 0.075 0.181 0.608 0.061 0 0.075 0 0 0 1 0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#auraGrain)"/>
+    </svg>
+  </div>
+</div>
 
 <div class="progress-bar" id="progressBar"></div>
 
