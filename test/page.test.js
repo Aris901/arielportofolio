@@ -245,6 +245,26 @@ async function connect(wsUrl) {
     check('Backend is translated', ru.skills.includes('Бэкенд'), ru.skills.join(','));
     check('nothing is left in English', ru.leftInEnglish.length === 0, ru.leftInEnglish.join(', '));
 
+    // A Russian value that is byte-identical to its English one is a
+    // copy-paste that never got translated. Worth asserting: the Russian
+    // About paragraph sat stale for several commits because the key existed
+    // in both languages, which was all the coverage check looked at.
+    const src = fs.readFileSync(path.join(ROOT, 'js', 'i18n.js'), 'utf8');
+    const cut = src.indexOf('    ru: {');
+    const table = (block) => Object.fromEntries(
+      [...block.matchAll(/"([a-z][\w.]*)":\s*"((?:[^"\\]|\\.)*)"/gi)].map((m) => [m[1], m[2]]));
+    const enT = table(src.slice(src.indexOf('en: {'), cut));
+    const ruT = table(src.slice(cut));
+    // Short strings and deliberate proper nouns legitimately match.
+    const untranslated = Object.keys(enT)
+      .filter((k) => ruT[k] !== undefined && ruT[k] === enT[k] && enT[k].length > 24)
+      .filter((k) => !/\.(title|name)$/.test(k) || !/^[A-Za-z0-9 .—–-]+$/.test(enT[k]));
+    check('no Russian string is an untranslated copy of the English',
+      untranslated.length === 0, untranslated.join(', '));
+    check('both languages define the same keys',
+      Object.keys(enT).length === Object.keys(ruT).length,
+      `EN ${Object.keys(enT).length} vs RU ${Object.keys(ruT).length}`);
+
     console.log('\nLAYOUT');
     for (const w of [320, 375, 768, 1280]) {
       await cdp.send('Emulation.setDeviceMetricsOverride', { width: w, height: 900, deviceScaleFactor: 1, mobile: w < 768 });

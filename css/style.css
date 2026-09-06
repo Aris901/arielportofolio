@@ -572,6 +572,16 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   letter-spacing: -0.02em;
 }
 
+/* This one is a sentence rather than a label, so it is set as an opening
+   line: smaller than the other section titles, and held to a measure that
+   keeps it to two lines on a wide screen. */
+.about-title {
+  font-size: clamp(1.35rem, 3vw, 1.95rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  max-width: 24ch;
+}
+
 /* ---------- about ---------- */
 .about-grid {
   display: grid;
