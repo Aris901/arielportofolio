@@ -11,6 +11,7 @@
   --terracotta-600: #a9522f;
   --orange: #f2a03d;
   --orange-600: #e08f28;
+  --accent-text: #9c5c18;
   --gold: #f5c242;
   --ink: #14100e;
 
@@ -54,6 +55,8 @@
   --shadow: rgba(0, 0, 0, 0.5);
 
   --heading: #f6ede8;
+  /* On the black panels the bright orange already clears AA (5.48:1). */
+  --accent-text: var(--orange);
   --text: #e0d3cb;
   /* Measured, not picked by eye: over the ember band on a section panel this
      clears 4.98:1, against 4.66:1 for the value one step darker. Still 60% of
@@ -553,7 +556,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 
 .kicker {
   display: inline-block;
-  color: var(--orange);
+  color: var(--accent-text);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -623,7 +626,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 /* ---------- skills (corner-bracket cards) ---------- */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: clamp(1.2rem, 3vw, 2rem);
 }
 
@@ -695,12 +698,12 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 .card-link::after { content: "→"; transition: transform 0.2s ease; }
-.card-link:hover { color: var(--orange); gap: 0.55rem; }
+.card-link:hover { color: var(--accent-text); gap: 0.55rem; }
 
 /* ---------- projects ---------- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   align-items: stretch;
   gap: 1.25rem;
 }
@@ -772,7 +775,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   margin-top: auto;
 }
 .project-links a { color: var(--heading); transition: color 0.2s ease; }
-.project-links a:hover { color: var(--orange); }
+.project-links a:hover { color: var(--accent-text); }
 
 /* ===========================================================
    CONTACT (black panel)
@@ -830,10 +833,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 .social-icon.icon-email:hover    { background: #ea4335; border-color: #ea4335; color: #fff; }
-.social-icon.icon-telegram:hover { background: #29a9eb; border-color: #29a9eb; color: #fff; }
 .social-icon.icon-whatsapp:hover { background: #25d366; border-color: #25d366; color: #fff; }
-.social-icon.icon-instagram:hover{ background: #e1306c; border-color: #e1306c; color: #fff; }
-.social-icon.icon-github:hover   { background: #f0f6fc; border-color: #f0f6fc; color: #181717; }
 .social-icon.icon-linkedin:hover { background: #0a66c2; border-color: #0a66c2; color: #fff; }
 
 /* ---------- footer ---------- */
@@ -1004,12 +1004,17 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
     align-items: center;
     gap: 2rem;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
     z-index: 1100;
   }
 
-  .nav-links.open { transform: translateX(0); }
+  .nav-links.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.3s ease, visibility 0s;
+  }
   .nav-links a { font-size: 1.05rem; }
 }
 
@@ -1496,8 +1501,8 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  border: 1.5px solid var(--orange);
-  color: var(--orange);
+  border: 1.5px solid var(--accent-text);
+  color: var(--accent-text);
   font-size: 0.85rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -1542,4 +1547,75 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 @media (max-width: 480px) {
   .work-steps li { padding-left: 2.6rem; }
   .work-steps li::before { width: 1.75rem; height: 1.75rem; font-size: 0.78rem; }
+}
+
+/* ===========================================================
+   PROJECT LINES — Systems, then Sites
+   Two named lines rather than one undifferentiated grid, so a visitor
+   can tell the machinery apart from the page in front of it.
+   =========================================================== */
+.project-line {
+  max-width: var(--max-width);
+  margin: clamp(2rem, 5vw, 3rem) auto 1.25rem;
+  padding: 0 clamp(1.1rem, 4vw, 3rem);
+}
+.project-line:first-of-type { margin-top: 0; }
+
+.line-title {
+  font-size: clamp(1.15rem, 3.4vw, 1.5rem);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.line-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.line-desc {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  max-width: 62ch;
+}
+
+/* The reference project carries the weight of the whole page, so it gets
+   the full row and a marked-out proof list rather than a tag strip alone. */
+.card-flag {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.card-proof {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.9rem 0 1.1rem;
+}
+.card-proof li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.card-proof li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+@media (min-width: 900px) {
+  /* Give the reference card room for its write-up instead of a quarter row. */
+  .project-card.is-reference .project-body { max-width: 74ch; }
 }
