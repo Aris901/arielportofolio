@@ -167,6 +167,32 @@ async function connect(wsUrl) {
       JSON.stringify(c.socials) === JSON.stringify(['Email', 'LinkedIn', 'WhatsApp']), c.socials.join(','));
     check('first person singular, no "we"', c.hasWe === false);
 
+    console.log('\nSITE-WIDE CHECKS (brief, section 9)');
+    const meta = await cdp.ev(() => ({
+      title: document.title,
+      desc: document.querySelector('meta[name="description"]').content,
+      ogImage: document.querySelector('meta[property="og:image"]')
+        ? document.querySelector('meta[property="og:image"]').content : null,
+      ogTitle: document.querySelector('meta[property="og:title"]')
+        ? document.querySelector('meta[property="og:title"]').content : null,
+      demoLabelled: /browser/i.test(document.body.innerText)
+        && /no server/i.test(document.body.innerText),
+      undimensioned: [...document.images]
+        .filter((i) => !i.getAttribute('width') || !i.getAttribute('height'))
+        .map((i) => i.getAttribute('src')),
+      availability: /available for|open to work|looking for|taking on projects|opportunit/i
+        .exec(document.body.innerText),
+    }));
+    check('the title describes the service, not a portfolio',
+      !/portfolio/i.test(meta.title) && /booking and ordering/i.test(meta.title), meta.title);
+    check('so does the meta description', !/personal portfolio/i.test(meta.desc), meta.desc.slice(0, 70));
+    check('an Open Graph image is declared', !!meta.ogImage && meta.ogImage.startsWith('https://'), meta.ogImage);
+    check('the Open Graph title is set', !!meta.ogTitle);
+    check('the demo is labelled a demo on the card that links to it', meta.demoLabelled);
+    check('every image carries explicit dimensions', meta.undimensioned.length === 0, meta.undimensioned.join(', '));
+    check('no availability or job-seeking language', meta.availability === null,
+      meta.availability ? meta.availability[0] : '');
+
     console.log('\nMOBILE DRAWER');
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 1, mobile: true });
     await load('en');

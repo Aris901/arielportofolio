@@ -5,8 +5,8 @@
 (function () {
   const translations = {
     en: {
-      "meta.title": "arielportofolio",
-      "meta.description": "Personal portfolio of Ariel Kalambay, developer.",
+      "meta.title": "Booking and ordering systems for small businesses — Ariel Kalambay",
+      "meta.description": "Booking and ordering systems for small service businesses — the staff side, the cash handling and the reporting most builders skip — and the sites in front of them. English and Russian.",
       "nav.home": "Home",
       "nav.about": "About",
       "nav.skills": "Skills",
@@ -53,7 +53,9 @@
       "projects.retreat.title": "Retreat Club Landing Page",
       "projects.retreat.desc": "A premium brochure rebuilt as an editorial web page — hand-drawn SVG illustrations, organic torn-edge photo frames, serif typography. Most small businesses have a PDF and no site; this is what the other half looks like.",
       "projects.walkthrough": "Watch it work →",
-      "projects.liveDemo": "Live Demo →",
+      "projects.tryDemo": "Try the browser demo →",
+      "projects.openSite": "Open the site →",
+      "projects.demoNote": "The demo runs in your browser — no server and no real payments. A deployed instance with a live backend is the next thing on this list.",
       "projects.sourceCode": "Source Code →",
       "projects.tagResponsive": "Responsive Design",
       "how.title": "How I work",
@@ -77,8 +79,8 @@
       "footer.prefix": "Designed & built by"
     },
     ru: {
-      "meta.title": "arielportofolio",
-      "meta.description": "Личное портфолио разработчика Ариэля Каламбая.",
+      "meta.title": "Системы бронирования и заказов для малого бизнеса — Ариэль Каламбай",
+      "meta.description": "Системы бронирования и заказов для малого сервисного бизнеса: сторона персонала, приём наличных и отчётность, которые обычно пропускают, — и сайты, которые стоят перед ними. Английский и русский.",
       "nav.home": "Главная",
       "nav.about": "Обо мне",
       "nav.skills": "Навыки",
@@ -125,7 +127,9 @@
       "projects.retreat.title": "Лендинг для ретрит-клуба",
       "projects.retreat.desc": "Премиальный буклет, пересобранный в редакционную веб-страницу: рисованные SVG-иллюстрации, рамки для фото с рваным краем, сериф-типографика. У большинства небольших компаний есть PDF и нет сайта — вот как выглядит вторая половина.",
       "projects.walkthrough": "Посмотреть в работе →",
-      "projects.liveDemo": "Демо →",
+      "projects.tryDemo": "Попробовать демо в браузере →",
+      "projects.openSite": "Открыть сайт →",
+      "projects.demoNote": "Демо работает прямо в браузере — без сервера и без настоящих платежей. Развёрнутый экземпляр с живым бэкендом — следующий пункт в списке.",
       "projects.sourceCode": "Исходный код →",
       "projects.tagResponsive": "Адаптивный дизайн",
       "how.title": "Как я работаю",

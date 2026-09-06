@@ -1549,6 +1549,16 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   .work-steps li::before { width: 1.75rem; height: 1.75rem; font-size: 0.78rem; }
 }
 
+/* The demo has to say what it is on the card, not only on its own page. */
+.links-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  border-left: 2px solid var(--border);
+  padding-left: 0.7rem;
+}
+
 /* ===========================================================
    PROJECT LINES — Systems, then Sites
    Two named lines rather than one undifferentiated grid, so a visitor
