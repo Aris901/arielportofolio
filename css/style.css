@@ -1,34 +1,35 @@
 /* ===========================================================
-   Portfolio — deep-green panel + orange accent design system
+   Portfolio — black panel + terracotta design system
    =========================================================== */
 
 :root {
-  /* brand */
-  --green-900: #16332a;
-  --green-800: #1e4034;
-  --green-700: #26503f;
-  --green-600: #2f6450;
+  /* brand — a warm-cast black rather than a neutral one, so the panels
+     sit in the same family as the terracotta instead of fighting it */
+  --ink-900: #080706;
+  --ink-800: #12100e;
+  --terracotta: #c86b4a;
+  --terracotta-600: #a9522f;
   --orange: #f2a03d;
   --orange-600: #e08f28;
   --gold: #f5c242;
-  --ink: #111a1e;
+  --ink: #14100e;
 
   /* surfaces */
   --page: #ffffff;
-  --page-alt: #f4f8f6;
+  --page-alt: #faf5f2;
   --surface: #ffffff;
-  --border: rgba(22, 51, 42, 0.12);
-  --shadow: rgba(22, 51, 42, 0.14);
+  --border: rgba(40, 24, 18, 0.12);
+  --shadow: rgba(40, 24, 18, 0.14);
 
   /* text */
-  --heading: #16241d;
-  --text: #37453e;
-  --text-muted: #6b7a73;
+  --heading: #241a15;
+  --text: #453a34;
+  --text-muted: #75665f;
 
-  /* on dark panels */
-  --on-green: #f2f7f4;
-  --on-green-muted: #a7c1b5;
-  --bracket: #1e4034;
+  /* on the black panels */
+  --on-dark: #f7f1ed;
+  --on-dark-muted: #c2ac9f;
+  --bracket: #12100e;
 
   /* Global tokens (build brief §0). Colour and font variables above are
      unchanged — only the layout tokens that were missing are added. */
@@ -45,18 +46,19 @@
 }
 
 [data-theme="dark"] {
-  --page: #0e1f19;
-  --page-alt: #132720;
-  --surface: #17302a;
-  --border: rgba(242, 247, 244, 0.14);
-  --bracket: rgba(242, 247, 244, 0.35);
+  --page: #0d0b09;
+  --page-alt: #141110;
+  --surface: #1a1512;
+  --border: rgba(247, 241, 237, 0.14);
+  --bracket: rgba(247, 241, 237, 0.35);
   --shadow: rgba(0, 0, 0, 0.5);
 
-  --heading: #eef5f1;
-  --text: #cfded7;
-  /* Lifted from #93a89f: over the aurora's brightest band on a card surface
-     the old value measured 4.24:1, just under AA for normal text. */
-  --text-muted: #a2b8ae;
+  --heading: #f6ede8;
+  --text: #e0d3cb;
+  /* Measured, not picked by eye: over the ember band on a section panel this
+     clears 4.98:1, against 4.66:1 for the value one step darker. Still 60% of
+     body-text luminance, so it reads as muted rather than as body copy. */
+  --text-muted: #b8a69c;
 }
 
 * { box-sizing: border-box; }
@@ -95,19 +97,19 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 /* ===========================================================
-   HERO BLOCK (green panel)
+   HERO BLOCK (black panel)
    =========================================================== */
 .hero-block {
   position: relative;
-  background: var(--green-800);
+  background: var(--ink-800);
   border-radius: 0 0 clamp(20px, 3vw, 36px) clamp(20px, 3vw, 36px);
   padding-top: var(--nav-height);
   padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 /* ---------- navbar ----------
-   Fixed so section links stay reachable past the green panel; once
-   scrolled it gains a green backdrop to keep the light text legible
+   Fixed so section links stay reachable past the black panel; once
+   scrolled it gains a black backdrop to keep the light text legible
    over the white sections below. */
 .navbar {
   position: fixed;
@@ -126,7 +128,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 .navbar.scrolled {
-  background: rgba(30, 64, 52, 0.94);
+  background: rgba(24, 20, 17, 0.94);
   backdrop-filter: blur(10px);
   border-radius: 0 0 18px 18px;
   box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.6);
@@ -136,7 +138,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  color: var(--on-green);
+  color: var(--on-dark);
   margin-right: auto;
   transition: transform 0.25s ease;
 }
@@ -156,7 +158,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .nav-links { display: flex; gap: 2rem; align-items: center; }
 
 .nav-links a {
-  color: var(--on-green-muted);
+  color: var(--on-dark-muted);
   font-size: 0.94rem;
   font-weight: 500;
   padding: 0.3rem 0;
@@ -174,15 +176,15 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   transition: transform 0.25s ease;
 }
 
-.nav-links a:hover { color: var(--on-green); }
+.nav-links a:hover { color: var(--on-dark); }
 .nav-links a:hover::after { transform: scaleX(1); }
 
 .nav-actions { display: flex; align-items: center; gap: 0.85rem; }
 
 .lang-select {
-  background: rgba(242, 247, 244, 0.08);
-  border: 1px solid rgba(242, 247, 244, 0.2);
-  color: var(--on-green);
+  background: rgba(247, 241, 237, 0.08);
+  border: 1px solid rgba(247, 241, 237, 0.2);
+  color: var(--on-dark);
   font-family: inherit;
   font-size: 0.78rem;
   font-weight: 600;
@@ -193,7 +195,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 .lang-select:hover { border-color: var(--orange); color: var(--orange); }
-.lang-select option { background: var(--green-800); color: var(--on-green); }
+.lang-select option { background: var(--ink-800); color: var(--on-dark); }
 
 .theme-toggle {
   display: flex;
@@ -202,9 +204,9 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(242, 247, 244, 0.08);
-  border: 1px solid rgba(242, 247, 244, 0.2);
-  color: var(--on-green);
+  background: rgba(247, 241, 237, 0.08);
+  border: 1px solid rgba(247, 241, 237, 0.2);
+  color: var(--on-dark);
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
@@ -253,7 +255,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .nav-toggle span {
   width: 24px;
   height: 2px;
-  background: var(--on-green);
+  background: var(--on-dark);
   display: block;
   border-radius: 2px;
 }
@@ -277,10 +279,10 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   gap: 0.6rem;
   margin: 0 0 1rem;
   padding: 0.4rem 0.95rem 0.4rem 0.75rem;
-  background: rgba(242, 247, 244, 0.08);
-  border: 1px solid rgba(242, 247, 244, 0.16);
+  background: rgba(247, 241, 237, 0.08);
+  border: 1px solid rgba(247, 241, 237, 0.16);
   border-radius: 999px;
-  color: var(--on-green);
+  color: var(--on-dark);
   font-size: 0.82rem;
   font-weight: 500;
 }
@@ -315,11 +317,11 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 
 .hero-desc {
   max-width: 430px;
-  color: var(--on-green-muted);
+  color: var(--on-dark-muted);
   font-size: 0.97rem;
   margin: 0 0 1.9rem;
   padding-left: 0.95rem;
-  border-left: 2px solid rgba(242, 247, 244, 0.28);
+  border-left: 2px solid rgba(247, 241, 237, 0.28);
 }
 
 .hero-actions {
@@ -357,7 +359,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  color: var(--on-green);
+  color: var(--on-dark);
   font-size: 0.92rem;
   font-weight: 500;
 }
@@ -384,7 +386,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 /* stats row */
 .hero-stats { display: flex; gap: clamp(1rem, 3vw, 2.2rem); flex-wrap: wrap; }
 
-.stat { padding-left: clamp(1rem, 3vw, 2.2rem); border-left: 1px solid rgba(242, 247, 244, 0.2); }
+.stat { padding-left: clamp(1rem, 3vw, 2.2rem); border-left: 1px solid rgba(247, 241, 237, 0.2); }
 .stat:first-child { padding-left: 0; border-left: none; }
 
 .stat strong {
@@ -397,7 +399,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 
 .stat strong.stat-text { font-size: clamp(1.05rem, 2.2vw, 1.3rem); letter-spacing: 0.01em; }
 
-.stat span { font-size: 0.72rem; color: var(--on-green-muted); line-height: 1.4; display: block; margin-top: 0.15rem; }
+.stat span { font-size: 0.72rem; color: var(--on-dark-muted); line-height: 1.4; display: block; margin-top: 0.15rem; }
 
 /* ---------- hero art ---------- */
 .hero-art {
@@ -416,7 +418,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: min(86%, 380px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--green-600) 0%, rgba(47, 100, 80, 0.35) 55%, transparent 72%);
+  background: radial-gradient(circle, var(--terracotta) 0%, color-mix(in srgb, var(--terracotta-600) 35%, transparent) 55%, transparent 72%);
   pointer-events: none;
 }
 
@@ -456,7 +458,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   z-index: 2;
   right: 2%;
   bottom: 4%;
-  background: rgba(17, 26, 30, 0.86);
+  background: rgba(18, 15, 13, 0.86);
   color: #fff;
   font-size: 0.68rem;
   letter-spacing: 0.02em;
@@ -472,7 +474,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   transform: translateX(-50%);
   width: 190px;
   height: 48px;
-  color: var(--green-800);
+  color: var(--ink-800);
   pointer-events: none;
 }
 
@@ -487,7 +489,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   justify-content: center;
   width: 30px;
   height: 30px;
-  color: var(--on-green);
+  color: var(--on-dark);
   animation: bounce 2.2s infinite;
 }
 
@@ -672,7 +674,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: 52px;
   height: 52px;
   border-radius: 12px;
-  background: var(--green-800);
+  background: var(--ink-800);
   color: var(--gold);
   margin-bottom: 1.15rem;
 }
@@ -724,7 +726,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--green-800);
+  background: var(--ink-800);
   color: var(--gold);
 }
 
@@ -759,7 +761,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   border-radius: 999px;
 }
 
-[data-theme="dark"] .tag-list li { background: rgba(242, 247, 244, 0.08); }
+[data-theme="dark"] .tag-list li { background: rgba(247, 241, 237, 0.08); }
 
 .project-links {
   display: flex;
@@ -773,10 +775,10 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .project-links a:hover { color: var(--orange); }
 
 /* ===========================================================
-   CONTACT (green panel)
+   CONTACT (black panel)
    =========================================================== */
 .contact-block {
-  background: var(--green-800);
+  background: var(--ink-800);
   border-radius: clamp(20px, 3vw, 36px) clamp(20px, 3vw, 36px) 0 0;
   padding: clamp(3.5rem, 7vw, 5.5rem) clamp(1.1rem, 4vw, 3rem);
   text-align: center;
@@ -793,7 +795,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 .contact-desc {
-  color: var(--on-green-muted);
+  color: var(--on-dark-muted);
   margin: 0 auto 2rem;
   max-width: 500px;
 }
@@ -813,8 +815,8 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(242, 247, 244, 0.22);
-  color: var(--on-green-muted);
+  border: 1px solid rgba(247, 241, 237, 0.22);
+  color: var(--on-dark-muted);
   transition: all 0.25s ease;
 }
 
@@ -920,7 +922,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 }
 
 /* ---------- nav underline + current-section marker ---------- */
-.nav-links a.is-current { color: var(--on-green); }
+.nav-links a.is-current { color: var(--on-dark); }
 .nav-links a.is-current::after { transform: scaleX(1); }
 
 /* the animated hamburger becomes an X while the menu is open */
@@ -996,7 +998,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
     right: 0;
     height: calc(100vh - var(--nav-height));
     width: min(76vw, 300px);
-    background: var(--green-900);
+    background: var(--ink-900);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -1074,15 +1076,15 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .skill-card,
 .project-card {
   box-shadow:
-    0 1px 2px rgba(22, 51, 42, 0.05),
-    0 8px 20px -14px rgba(22, 51, 42, 0.22);
+    0 1px 2px rgba(40, 24, 18, 0.05),
+    0 8px 20px -14px rgba(40, 24, 18, 0.22);
 }
 
 .skill-card:hover,
 .project-card:hover {
   box-shadow:
-    0 2px 4px rgba(22, 51, 42, 0.05),
-    0 18px 34px -18px rgba(22, 51, 42, 0.3);
+    0 2px 4px rgba(40, 24, 18, 0.05),
+    0 18px 34px -18px rgba(40, 24, 18, 0.3);
 }
 
 [data-theme="dark"] .skill-card,
@@ -1192,14 +1194,17 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .progress-bar { z-index: 1200; }
 
 /* ===========================================================
-   AURORA BOREALIS BACKDROP
+   EMBER BACKDROP
    Six blurred gradient layers plus film grain, fixed behind the page.
+   Same structure as the aurora it replaces — a bright ribbon crossing the
+   viewport, softened to nothing at the edges — recoloured from cold green
+   to terracotta over a warm black.
 
    Compositing note: `position: fixed` forms a stacking context, which
    isolates mix-blend-mode from the body background. So the base colour
    is painted by .aura-base *inside* the same context — the container
    itself stays transparent, as the design requires, and the layers
-   still composite against #100e0b rather than against nothing.
+   still composite against the black rather than against nothing.
    =========================================================== */
 
 .aura-bg {
@@ -1214,7 +1219,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .aura-base {
   position: absolute;
   inset: 0;
-  background-color: #100e0b;
+  background-color: #0a0806;
 }
 
 .aura-layer {
@@ -1226,40 +1231,40 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 
 /* Mobile blur radii; the desktop values are applied further down. */
 .aura-layer-1 {
-  background: linear-gradient(154deg, transparent 18%, rgba(12,72,61,0.06) 29%, rgba(0,229,255,0.40) 36%, rgb(255,255,255) 42%, rgba(73,207,158,0.32) 48%, rgba(38,158,119,0.22) 55%, rgba(0,183,255,0.30) 62%, rgba(15,76,65,0.08) 68%, transparent 82%);
+  background: linear-gradient(154deg, transparent 18%, rgba(74,32,18,0.06) 29%, rgba(200,107,74,0.40) 36%, rgb(255,206,178) 42%, rgba(226,146,110,0.32) 48%, rgba(169,82,47,0.22) 55%, rgba(214,120,80,0.30) 62%, rgba(66,30,17,0.08) 68%, transparent 82%);
   mix-blend-mode: screen;
   filter: blur(85px);
 }
 
 .aura-layer-2 {
-  background: linear-gradient(128deg, transparent 28%, rgba(15,82,96,0.06) 38%, rgba(0,183,255,0.35) 43%, rgb(255,255,255) 48%, rgba(68,197,185,0.22) 52%, rgba(0,229,255,0.25) 57%, rgba(25,105,112,0.10) 62%, transparent 76%);
+  background: linear-gradient(128deg, transparent 28%, rgba(84,40,22,0.06) 38%, rgba(212,124,84,0.35) 43%, rgb(255,214,190) 48%, rgba(232,158,122,0.22) 52%, rgba(200,107,74,0.25) 57%, rgba(96,46,26,0.10) 62%, transparent 76%);
   mix-blend-mode: screen;
   filter: blur(75px);
   opacity: 0.9;
 }
 
 .aura-layer-3 {
-  background: radial-gradient(ellipse 78% 20% at 51% 53%, rgba(65,183,155,0.24) 0%, rgba(30,102,91,0.10) 45%, transparent 82%);
+  background: radial-gradient(ellipse 78% 20% at 51% 53%, rgba(201,111,74,0.24) 0%, rgba(120,56,32,0.10) 45%, transparent 82%);
   mix-blend-mode: screen;
   filter: blur(70px);
   opacity: 0.9;
 }
 
 .aura-layer-4 {
-  background: radial-gradient(ellipse 48% 9% at 52% 50%, rgba(190,255,226,0.14) 0%, rgba(91,195,163,0.06) 45%, transparent 80%);
+  background: radial-gradient(ellipse 48% 9% at 52% 50%, rgba(255,216,194,0.14) 0%, rgba(214,134,96,0.06) 45%, transparent 80%);
   mix-blend-mode: screen;
   filter: blur(175px);
 }
 
 .aura-layer-5 {
-  background: linear-gradient(to top, rgba(1,5,13,0.90) 0%, rgba(2,7,16,0.58) 28%, rgba(3,9,20,0.20) 55%, transparent 78%);
+  background: linear-gradient(to top, rgba(7,5,4,0.90) 0%, rgba(10,7,5,0.58) 28%, rgba(14,10,7,0.20) 55%, transparent 78%);
   mix-blend-mode: multiply;
   filter: blur(80px);
   opacity: 0.9;
 }
 
 .aura-layer-6 {
-  background: radial-gradient(ellipse 50% 28% at 72% 18%, rgba(89,62,151,0.10) 0%, rgba(57,44,100,0.04) 45%, transparent 82%);
+  background: radial-gradient(ellipse 50% 28% at 72% 18%, rgba(151,74,49,0.10) 0%, rgba(100,48,30,0.04) 45%, transparent 82%);
   mix-blend-mode: screen;
   filter: blur(138px);
   opacity: 0.7;
@@ -1274,7 +1279,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 .aura-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(16, 14, 11, 0.52);
+  background: rgba(10, 8, 6, 0.44);
   pointer-events: none;
 }
 
@@ -1323,7 +1328,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
    `screen` over a light surface washes out entirely, so the layers swap to
    `multiply` per the design's own light adaptation, at reduced strength so
    the page stays readable rather than turning muddy. */
-:root:not([data-theme="dark"]) .aura-base { background-color: #f4f8f6; }
+:root:not([data-theme="dark"]) .aura-base { background-color: #faf5f2; }
 
 :root:not([data-theme="dark"]) .aura-layer-1,
 :root:not([data-theme="dark"]) .aura-layer-2,
@@ -1340,26 +1345,39 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
    scrim would fight them — it lightens instead. */
 :root:not([data-theme="dark"]) .aura-scrim { background: rgba(255, 255, 255, 0.55); }
 
+/* Light mode needs the same treatment dark mode already had. Plain .section
+   carried no background, so its muted text sat straight on the backdrop and
+   measured 2.76:1 — below AA, and worse under the old palette. A frosted panel
+   lifts it to 4.85:1 with the terracotta still reading through.
+   .section-alt is excluded: it is already opaque, and flattening it would lose
+   the alternating rhythm between sections. */
+:root:not([data-theme="dark"]) .section:not(.section-alt) {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius);
+}
+
 /* ===========================================================
    SURFACES OVER THE AURORA
    In dark mode the sections go translucent so the backdrop reads through
    them. Everything keeps a blur so text contrast survives.
    =========================================================== */
 
-[data-theme="dark"] body { background-color: #100e0b; }
+[data-theme="dark"] body { background-color: #0a0806; }
 
 [data-theme="dark"] .hero-block {
-  background: linear-gradient(180deg, rgba(18, 40, 33, 0.62), rgba(12, 26, 22, 0.78));
+  background: linear-gradient(180deg, rgba(20, 16, 14, 0.62), rgba(13, 11, 9, 0.78));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 [data-theme="dark"] .hero-block::before { opacity: 0.5; }
 
-[data-theme="dark"] .hero-notch { color: rgba(12, 26, 22, 0.78); }
+[data-theme="dark"] .hero-notch { color: rgba(13, 11, 9, 0.78); }
 
 [data-theme="dark"] .navbar.scrolled {
-  background: rgba(14, 30, 25, 0.82);
+  background: rgba(15, 12, 10, 0.82);
 }
 
 /* Content sits on frosted glass panels rather than directly on the aurora.
@@ -1370,48 +1388,48 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 [data-theme="dark"] .section-alt {
   max-width: var(--max-width);
   margin: clamp(1rem, 3vw, 2rem) auto;
-  background: rgba(13, 26, 22, 0.66);
+  background: rgba(14, 11, 9, 0.66);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(242, 247, 244, 0.08);
+  border: 1px solid rgba(247, 241, 237, 0.08);
   border-radius: clamp(18px, 2.5vw, 28px);
   box-shadow: 0 30px 70px -50px rgba(0, 0, 0, 0.9);
 }
 
-[data-theme="dark"] .section-alt { background: rgba(10, 21, 18, 0.72); }
+[data-theme="dark"] .section-alt { background: rgba(11, 9, 8, 0.72); }
 
 [data-theme="dark"] .skill-card,
 [data-theme="dark"] .project-card {
-  background: rgba(20, 40, 34, 0.72);
+  background: rgba(22, 18, 15, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-color: rgba(242, 247, 244, 0.12);
+  border-color: rgba(247, 241, 237, 0.12);
 }
 
 [data-theme="dark"] .skill-card:hover,
 [data-theme="dark"] .project-card:hover {
-  background: rgba(24, 48, 40, 0.82);
+  background: rgba(27, 22, 18, 0.82);
   border-color: rgba(242, 160, 61, 0.35);
 }
 
 [data-theme="dark"] .photo-frame {
-  border-color: rgba(242, 247, 244, 0.16);
+  border-color: rgba(247, 241, 237, 0.16);
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
 }
 
 [data-theme="dark"] .contact-block {
-  background: linear-gradient(180deg, rgba(12, 26, 22, 0.78), rgba(16, 34, 28, 0.9));
+  background: linear-gradient(180deg, rgba(13, 11, 9, 0.78), rgba(18, 14, 12, 0.9));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 [data-theme="dark"] .site-footer {
   background: transparent;
-  border-top-color: rgba(242, 247, 244, 0.1);
+  border-top-color: rgba(247, 241, 237, 0.1);
 }
 
-[data-theme="dark"] .project-thumb { background: rgba(242, 247, 244, 0.06); }
-[data-theme="dark"] .tag-list li { background: rgba(242, 247, 244, 0.09); }
+[data-theme="dark"] .project-thumb { background: rgba(247, 241, 237, 0.06); }
+[data-theme="dark"] .tag-list li { background: rgba(247, 241, 237, 0.09); }
 
 /* The aurora is expensive to composite; skip the extra surface blurs on
    small screens where it costs the most and shows the least. */
