@@ -114,12 +114,22 @@ async function connect(wsUrl) {
       desc: document.querySelector('.hero-desc').textContent.replace(/\s+/g, ' ').trim(),
       stats: [...document.querySelectorAll('.stat')].map((s) => s.textContent.replace(/\s+/g, ' ').trim()),
     }));
-    check('headline names the buyer and the thing built', /booking and ordering systems for small service businesses/i.test(h.h1), h.h1);
-    check('availability framing is gone', !/taking on projects/i.test(h.badge + h.h1 + h.desc), h.badge);
-    check('AI method is disclosed up front', /AI assistance/i.test(h.badge), h.badge);
-    check('code handover is stated in the headline block', /code handed over on delivery/i.test(h.desc));
-    check('EN/RU is no longer a statistic', !h.stats.some((s) => /EN \/ RU/.test(s)), h.stats.join(' | '));
-    check('languages are sold, not counted', /English and Russian/i.test(h.desc), h.desc);
+    // Order 2 of the build brief supplies this copy and marks it "final, paste
+    // as is", so these assert the brief's words rather than a paraphrase.
+    check('H1 is the brief\'s line', h.h1 === 'I build the systems small businesses run on.', h.h1);
+    check('status pill is the brief\'s line', h.badge === 'Taking on projects · EN / RU', h.badge);
+    check('sub-paragraph names what is sold and to whom',
+      /booking and ordering systems/i.test(h.desc) && /the staff side/i.test(h.desc), h.desc);
+    check('code ownership is stated in the hero', /on delivery it is yours/i.test(h.desc));
+    check('the three stats are the brief\'s three',
+      h.stats.some((s) => /Live projects/.test(s))
+      && h.stats.some((s) => /EN \/ RU/.test(s) && /not translated on top/.test(s))
+      && h.stats.some((s) => /Code handed over on delivery/.test(s)),
+      h.stats.join(' | '));
+    // The AI method still has to be disclosed; Order 2 simply moved it off the
+    // pill, so it lives in the About copy now.
+    check('the AI method is disclosed somewhere on the page',
+      await cdp.ev(() => /AI assistance/i.test(document.body.innerText)));
 
     console.log('\nPROJECT LINES');
     const pl = await cdp.ev(() => ({
@@ -180,7 +190,7 @@ async function connect(wsUrl) {
       undimensioned: [...document.images]
         .filter((i) => !i.getAttribute('width') || !i.getAttribute('height'))
         .map((i) => i.getAttribute('src')),
-      availability: /available for|open to work|looking for|taking on projects|opportunit/i
+      jobSeeking: /available for hire|available for new|open to work|looking for work|seeking (a )?(job|role|position)|hire me|opportunit/i
         .exec(document.body.innerText),
     }));
     check('the title describes the service, not a portfolio',
@@ -190,8 +200,16 @@ async function connect(wsUrl) {
     check('the Open Graph title is set', !!meta.ogTitle);
     check('the demo is labelled a demo on the card that links to it', meta.demoLabelled);
     check('every image carries explicit dimensions', meta.undimensioned.length === 0, meta.undimensioned.join(', '));
-    check('no availability or job-seeking language', meta.availability === null,
-      meta.availability ? meta.availability[0] : '');
+    // The brief contradicts itself here, and this records which side won.
+    //
+    // Section 9 says "No availability or job-seeking language anywhere", and
+    // Order 2's own definition of done repeats it — yet the status pill Order 2
+    // supplies as "final, paste as is" reads "Taking on projects", which is
+    // availability language. The pasted copy was chosen, so this narrows to
+    // what both halves of the brief actually agree on: nothing about wanting a
+    // job, being available for hire, or seeking opportunities.
+    check('no job-seeking language', meta.jobSeeking === null,
+      meta.jobSeeking ? meta.jobSeeking[0] : '');
 
     console.log('\nMOBILE DRAWER');
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: 375, height: 812, deviceScaleFactor: 1, mobile: true });
@@ -221,7 +239,7 @@ async function connect(wsUrl) {
         // Project and product names read the same in both languages.
         .filter((k) => k !== 'projects.dining.title'),
     }));
-    check('headline is translated', /системы бронирования и заказов/i.test(ru.h1), ru.h1);
+    check('headline is translated', /системы, на которых держится малый бизнес/i.test(ru.h1), ru.h1);
     check('both lines are translated', JSON.stringify(ru.lines) === JSON.stringify(['Системы', 'Сайты']), ru.lines.join(','));
     check('the reference flag is translated', ru.flag === 'Референсный проект', ru.flag);
     check('Backend is translated', ru.skills.includes('Бэкенд'), ru.skills.join(','));
@@ -252,10 +270,16 @@ async function connect(wsUrl) {
 
     console.log('\nANIMATION TARGETS');
     await load('en');
-    // Scroll the way a person does, one step per round-trip. The
-    // IntersectionObserver needs painted frames between steps; looping inside
-    // a single evaluate starves it and the reveals appear not to fire.
-    for (let y = 0; y < 16; y++) {
+    // Pin the viewport rather than inheriting whatever the previous block
+    // left, and scroll by the page's real height rather than a fixed guess.
+    // Both were wrong before: a stale viewport plus a fixed 16 steps left the
+    // skills heading unobserved and made the page look broken when it was not.
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 800, deviceScaleFactor: 1, mobile: false });
+    await load('en');
+    const pageHeight = await cdp.ev(() => document.body.scrollHeight);
+    // One step per round-trip: the IntersectionObserver needs painted frames
+    // between steps, and looping inside a single evaluate starves it.
+    for (let y = 0; y < Math.ceil(pageHeight / 600) + 2; y++) {
       await cdp.ev(() => window.scrollBy(0, 600));
       await sleep(220);
     }
