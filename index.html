@@ -91,7 +91,6 @@
       <select class="lang-select" id="langSelect" aria-label="Language">
         <option value="en">EN</option>
         <option value="ru">RU</option>
-        <option value="fr">FR</option>
       </select>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
@@ -108,50 +107,44 @@
     <div class="hero-content">
       <p class="hero-badge">
         <span class="status-dot" aria-hidden="true"></span>
-        <span data-i18n="hero.badge">Available for new opportunities</span>
+        <span data-i18n="hero.badge">Taking on projects · EN / RU</span>
       </p>
 
-      <h1 class="hero-name">
-        <span data-i18n="hero.line1">Building The Web,</span><br>
-        <span data-i18n="hero.line2">One Project At</span><br>
-        <span data-i18n="hero.line3">A Time.</span><span class="hero-spark" aria-hidden="true">
-          <svg viewBox="0 0 32 32"><path d="M16 0c1.4 8.6 6 13.2 16 16-10 2.8-14.6 7.4-16 16-1.4-8.6-6-13.2-16-16C10 13.2 14.6 8.6 16 0Z" fill="currentColor"/></svg>
-        </span>
-      </h1>
+      <h1 class="hero-name" data-i18n="hero.h1">I build the systems small businesses run on.</h1>
 
       <p class="hero-desc" data-i18n="hero.desc">
-        I'm Ariel Kalambay, a software developer. I build clean, reliable software and
-        enjoy turning ideas into working products — from small scripts to full web applications.
+        Booking and ordering systems — including the staff side, the cash handling and the
+        reporting most builders skip — and the sites that sit in front of them. English and
+        Russian. Every project below is live, the code is public, and on delivery it is yours.
       </p>
 
       <div class="hero-actions">
         <a href="#projects" class="btn-dark">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
           <span class="btn-dark-text">
-            <small data-i18n="hero.btn1Small">Take a look at</small>
-            <strong data-i18n="hero.btn1">My Projects</strong>
+            <strong data-i18n="hero.btn1">See what I have built</strong>
           </span>
         </a>
         <a href="#contact" class="btn-play">
           <span class="play-circle" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M9 6l9 6-9 6V6Z" fill="currentColor"/></svg>
           </span>
-          <span data-i18n="hero.btn2">Get In Touch</span>
+          <span data-i18n="hero.btn2">Start a project</span>
         </a>
       </div>
 
       <div class="hero-stats">
         <div class="stat">
-          <strong>4</strong>
-          <span data-i18n="hero.stat1" data-i18n-html="true">Live projects<br>you can open now</span>
+          <strong>3</strong>
+          <span data-i18n="hero.stat1">Live projects — open any of them right now</span>
         </div>
         <div class="stat">
-          <strong>3</strong>
-          <span data-i18n="hero.stat2" data-i18n-html="true">Languages<br>across every page</span>
+          <strong class="stat-text">EN / RU</strong>
+          <span data-i18n="hero.stat2">Built into the product, not translated on top</span>
         </div>
         <div class="stat">
           <strong>100%</strong>
-          <span data-i18n="hero.stat3" data-i18n-html="true">Responsive<br>phone to desktop</span>
+          <span data-i18n="hero.stat3">Code handed over on delivery</span>
         </div>
       </div>
     </div>
@@ -266,25 +259,6 @@
 
     <article class="project-card">
       <div class="project-thumb" aria-hidden="true">
-        <svg viewBox="0 0 40 40"><path d="M12 20l6 6 12-12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="6" width="28" height="28" rx="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-      </div>
-      <div class="project-body">
-        <h3 data-i18n="projects.todo.title">To-Do List App</h3>
-        <p data-i18n="projects.todo.desc">A simple task manager where you can add, complete, and delete to-dos.
-          Tasks persist between visits using localStorage. Built to practice DOM
-          manipulation and event handling in vanilla JavaScript.</p>
-        <ul class="tag-list">
-          <li>HTML</li><li>CSS</li><li>JavaScript</li>
-        </ul>
-        <div class="project-links">
-          <a href="https://aris901.github.io/todo-list-app" target="_blank" rel="noopener" data-i18n="projects.liveDemo">Live Demo →</a>
-          <a href="https://github.com/Aris901/todo-list-app" target="_blank" rel="noopener" data-i18n="projects.sourceCode">Source Code →</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="project-card">
-      <div class="project-thumb" aria-hidden="true">
         <svg viewBox="0 0 40 40"><path d="M11 6v9a4.5 4.5 0 0 0 9 0V6M15.5 15v19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M29 6c-2.5 3-3.5 7-3.5 11h7C32.5 13 31.5 9 29 6ZM29 17v17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="project-body">
@@ -346,13 +320,13 @@
 <!-- CONTACT -->
 <section class="contact-block" id="contact">
   <div class="contact-inner">
-    <span class="kicker light" data-i18n="contact.kicker">Get In Touch</span>
-    <h2 class="contact-title" data-i18n="contact.title">Let's Build Something Together.</h2>
+    <span class="kicker light" data-i18n="contact.kicker">Start here</span>
+    <h2 class="contact-title" data-i18n="contact.title">Start a project</h2>
     <p class="contact-desc" data-i18n="contact.desc">
-      I'm currently open to new opportunities and collaborations. Whether you have a
-      question or just want to say hi, my inbox is always open!
+      Tell me what happens now — not what you want built, but what your day looks like
+      and where it leaks.
     </p>
-    <a href="mailto:ariel.kalambay123@gmail.com" class="btn-pill btn-pill-lg" data-i18n="contact.btn">Say Hello</a>
+    <a href="mailto:ariel.kalambay123@gmail.com" class="btn-pill btn-pill-lg" data-i18n="contact.btn">Send an email</a>
 
     <div class="social-icons">
       <a class="social-icon icon-email" href="mailto:ariel.kalambay123@gmail.com" aria-label="Email">

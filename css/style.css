@@ -30,7 +30,16 @@
   --on-green-muted: #a7c1b5;
   --bracket: #1e4034;
 
-  --max-width: 1180px;
+  /* Global tokens (build brief §0). Colour and font variables above are
+     unchanged — only the layout tokens that were missing are added. */
+  --max-width: 1120px;
+  --gutter: 20px;      /* phone */
+  --gutter-lg: 40px;   /* desktop */
+  --tap-min: 44px;     /* minimum touch target */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+
   --nav-height: 78px;
   --radius: 16px;
 }
@@ -291,30 +300,17 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   100% { box-shadow: 0 0 0 0 rgba(245, 194, 66, 0); }
 }
 
+/* The H1 is now one sentence rather than three short lines. The lower bound
+   is 28px, the floor the brief sets: at 360px the sentence sets to three
+   lines, and shrinking further to save a line is explicitly ruled out. */
 .hero-name {
-  font-size: clamp(2.2rem, 5.4vw, 3.5rem);
+  font-size: clamp(1.75rem, 6.2vw, 3.2rem);
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
-  line-height: 1.12;
+  line-height: 1.14;
   margin: 0 0 1.1rem;
-}
-
-.hero-spark {
-  display: inline-block;
-  vertical-align: baseline;
-  width: 0.62em;
-  height: 0.62em;
-  margin-left: 0.18em;
-  color: var(--gold);
-  animation: sparkTwinkle 3.2s ease-in-out infinite;
-}
-
-.hero-spark svg { width: 100%; height: 100%; }
-
-@keyframes sparkTwinkle {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50%      { transform: scale(0.78) rotate(18deg); opacity: 0.7; }
+  max-width: 15ch;
 }
 
 .hero-desc {
@@ -399,6 +395,8 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   line-height: 1.1;
 }
 
+.stat strong.stat-text { font-size: clamp(1.05rem, 2.2vw, 1.3rem); letter-spacing: 0.01em; }
+
 .stat span { font-size: 0.72rem; color: var(--on-green-muted); line-height: 1.4; display: block; margin-top: 0.15rem; }
 
 /* ---------- hero art ---------- */
@@ -420,6 +418,11 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   border-radius: 50%;
   background: radial-gradient(circle, var(--green-600) 0%, rgba(47, 100, 80, 0.35) 55%, transparent 72%);
   pointer-events: none;
+}
+
+@keyframes sparkTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50%      { transform: scale(0.78) rotate(18deg); opacity: 0.7; }
 }
 
 .art-spark {
@@ -1028,7 +1031,7 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
 
   .hero-badge, .hero-name, .hero-desc, .hero-actions, .hero-stats,
   .hero-art, .hero-photo, .hero-art-tag,
-  .status-dot, .hero-spark, .art-spark, .scroll-cue {
+  .status-dot, .art-spark, .scroll-cue {
     animation: none;
     opacity: 1;
     transform: none;
