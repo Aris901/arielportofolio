@@ -129,7 +129,16 @@ async function connect(wsUrl) {
       flag: document.querySelector('.card-flag') ? document.querySelector('.card-flag').textContent.trim() : null,
       proof: document.querySelectorAll('.card-proof li').length,
       emptyProof: [...document.querySelectorAll('.card-proof li')].filter((e) => e.textContent.trim().length < 8).length,
-      links: [...document.querySelectorAll('.project-links a')].length,
+      // Per card, not a total: a count breaks whenever a card gains a link,
+      // which is the wrong thing to defend. What matters is that no project
+      // is published without something to click and the code behind it.
+      cardsMissingLinks: [...document.querySelectorAll('.project-card')]
+        .map((card) => [...card.querySelectorAll('.project-links a')].map((a) => a.href))
+        .filter((hrefs) => !hrefs.some((h) => h.includes('github.io'))
+          || !hrefs.some((h) => h.includes('github.com')))
+        .length,
+      deadLinks: [...document.querySelectorAll('.project-links a')]
+        .filter((a) => !/^https?:/.test(a.getAttribute('href') || '')).length,
     }));
     check('two lines: Systems then Sites', JSON.stringify(pl.lines) === JSON.stringify(['Systems', 'Sites']), pl.lines.join(','));
     check('In-Room Dining stands alone under Systems', pl.systemsCards === 1, String(pl.systemsCards));
@@ -140,7 +149,9 @@ async function connect(wsUrl) {
     // every item says something.
     check('it carries a proof list, not only tags', pl.proof >= 3, String(pl.proof));
     check('no proof item is empty', pl.emptyProof === 0, String(pl.emptyProof));
-    check('every project keeps a live link and a repo', pl.links === 6, String(pl.links));
+    check('every project keeps a live link and a repo', pl.cardsMissingLinks === 0,
+      `${pl.cardsMissingLinks} card(s) missing one`);
+    check('no project link is a placeholder', pl.deadLinks === 0, String(pl.deadLinks));
 
     console.log('\nCLAIMS');
     const c = await cdp.ev(() => ({
