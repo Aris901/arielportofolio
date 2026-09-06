@@ -128,13 +128,18 @@ async function connect(wsUrl) {
       sitesCards: document.querySelectorAll('.projects-grid')[1].querySelectorAll('.project-card').length,
       flag: document.querySelector('.card-flag') ? document.querySelector('.card-flag').textContent.trim() : null,
       proof: document.querySelectorAll('.card-proof li').length,
+      emptyProof: [...document.querySelectorAll('.card-proof li')].filter((e) => e.textContent.trim().length < 8).length,
       links: [...document.querySelectorAll('.project-links a')].length,
     }));
     check('two lines: Systems then Sites', JSON.stringify(pl.lines) === JSON.stringify(['Systems', 'Sites']), pl.lines.join(','));
     check('In-Room Dining stands alone under Systems', pl.systemsCards === 1, String(pl.systemsCards));
     check('clinic and Retreat Club sit under Sites', pl.sitesCards === 2, String(pl.sitesCards));
     check('the reference project is marked as such', pl.flag === 'The reference project', pl.flag);
-    check('it carries a proof list, not only tags', pl.proof === 3, String(pl.proof));
+    // A count would break every time a fact is added to the card, which is
+    // the wrong thing to defend. What matters is that the list is there and
+    // every item says something.
+    check('it carries a proof list, not only tags', pl.proof >= 3, String(pl.proof));
+    check('no proof item is empty', pl.emptyProof === 0, String(pl.emptyProof));
     check('every project keeps a live link and a repo', pl.links === 6, String(pl.links));
 
     console.log('\nCLAIMS');
