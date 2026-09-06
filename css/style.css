@@ -1425,3 +1425,103 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
     -webkit-backdrop-filter: none;
   }
 }
+
+/* ===========================================================
+   ORDER 4 — "How I work" and "Three questions"
+   Two blocks, side by side above 900px, stacked below. Nothing is
+   collapsed: these answers only work if they are readable without
+   interaction.
+   =========================================================== */
+
+.working-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+@media (min-width: 900px) {
+  .working-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.working-block .section-title {
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  margin-bottom: 1.5rem;
+}
+
+/* --- numbered steps ------------------------------------------------------ */
+.work-steps {
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 3rem;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.work-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -0.1rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--orange);
+  color: var(--orange);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.work-steps li strong { color: var(--heading); font-weight: 600; }
+
+/* --- questions ----------------------------------------------------------- */
+.faq-list { margin: 0; }
+
+.faq-list dt {
+  color: var(--heading);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.faq-list dt::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.faq-list dd {
+  margin: 0 0 1.6rem;
+  padding-left: 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  border-left: 2px solid var(--border);
+}
+
+.faq-list dd:last-child { margin-bottom: 0; }
+
+@media (max-width: 480px) {
+  .work-steps li { padding-left: 2.6rem; }
+  .work-steps li::before { width: 1.75rem; height: 1.75rem; font-size: 0.78rem; }
+}

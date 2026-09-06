@@ -132,6 +132,7 @@
     { selector: '.about-photo', stagger: 0, variant: 'from-right' },
     { selector: '.skill-card', stagger: 110 },
     { selector: '.project-card', stagger: 90 },
+    { selector: '.working-block', stagger: 120 },
     { selector: '.contact-desc', stagger: 0 },
     { selector: '.contact-block .btn-pill-lg', stagger: 0 },
     { selector: '.social-icon', stagger: 60, variant: 'pop' },
