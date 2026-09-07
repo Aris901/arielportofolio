@@ -572,6 +572,15 @@ h1, h2, h3 { color: var(--heading); margin: 0; line-height: 1.15; }
   letter-spacing: -0.02em;
 }
 
+/* A one-line paragraph used as a beat between two long ones. It only works
+   if it is given room, so it gets the space a heading would. */
+.about-beat {
+  font-size: 1.06em;
+  font-weight: 600;
+  color: var(--heading);
+  margin-block: 1.4rem;
+}
+
 /* This one is a sentence rather than a label, so it is set as an opening
    line: smaller than the other section titles, and held to a measure that
    keeps it to two lines on a wide screen. */
