@@ -34,38 +34,40 @@ const CHROME = [
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Same black and terracotta as the site, so the preview and the page are
+// Same blue and black as the site, so the preview and the page are
 // recognisably the same thing.
 const CARD = `<!DOCTYPE html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; }
   body {
     width: ${W}px; height: ${H}px; overflow: hidden;
-    background: #0a0806; color: #f6ede8;
-    font-family: Poppins, "Segoe UI", sans-serif;
+    background: #04060c; color: #f8fafc;
+    font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
     display: flex; flex-direction: column; justify-content: center;
     padding: 76px 88px; position: relative;
   }
   .ember {
     position: absolute; inset: -30% -10% auto -10%; height: 150%;
-    background: linear-gradient(154deg, transparent 20%, rgba(200,107,74,.40) 36%,
-      rgb(255,206,178) 42%, rgba(226,146,110,.32) 48%, rgba(169,82,47,.22) 56%,
+    background: linear-gradient(154deg, transparent 20%, rgba(56,189,248,.40) 36%,
+      rgb(198,228,255) 42%, rgba(96,165,250,.32) 48%, rgba(37,99,235,.22) 56%,
       transparent 76%);
     filter: blur(120px); opacity: .55;
   }
-  .scrim { position: absolute; inset: 0; background: rgba(10,8,6,.42); }
+  .scrim { position: absolute; inset: 0; background: rgba(4,6,12,.42); }
   .in { position: relative; }
   .eyebrow {
     font-size: 21px; font-weight: 600; letter-spacing: .16em;
-    text-transform: uppercase; color: #f2a03d; margin-bottom: 26px;
+    text-transform: uppercase; color: #60a5fa; margin-bottom: 26px;
+    font-family: 'JetBrains Mono', monospace;
   }
   h1 {
     font-size: 62px; line-height: 1.12; letter-spacing: -.02em;
     font-weight: 800; max-width: 19ch;
   }
-  p { margin-top: 26px; font-size: 25px; line-height: 1.5; color: #cdbcb2; max-width: 34ch; }
-  .rule { margin-top: 38px; width: 96px; height: 4px; background: #c86b4a; border-radius: 3px; }
+  p { margin-top: 26px; font-size: 25px; line-height: 1.5; color: #a9bad4; max-width: 34ch; }
+  .rule { margin-top: 38px; width: 96px; height: 4px; border-radius: 3px;
+    background: linear-gradient(90deg, #2563eb, #38bdf8); box-shadow: 0 0 22px rgba(56,189,248,.6); }
 </style></head><body>
   <div class="ember"></div><div class="scrim"></div>
   <div class="in">
