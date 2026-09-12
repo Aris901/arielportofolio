@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<!-- The aurora backdrop is tuned for a dark surface, so dark is the default.
-     script.js drops this attribute if the visitor has chosen light. -->
+<!-- data-theme is on the markup so a visitor with JavaScript off still gets a
+     complete theme rather than a half-applied one, and so there is no flash
+     before the script below runs. The script then corrects it. -->
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -25,6 +26,31 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" type="image/svg+xml" href="img/logo.svg">
+
+<script>
+/* Resolve the theme before the first paint.
+ *
+ * There are three states a visitor can be in, not two: they chose light, they
+ * chose dark, or they have chosen nothing and their operating system has an
+ * opinion. The third is the common one, and it was previously ignored — the
+ * markup hardcoded dark, so someone whose machine is set to light got dark
+ * anyway.
+ *
+ * Inline and blocking on purpose. Deferred to the end of the body this would
+ * run after the first paint and the page would visibly change theme. */
+(function () {
+  var root = document.documentElement;
+  var saved = null;
+  try { saved = localStorage.getItem('portfolio-theme'); } catch (e) { /* private mode */ }
+
+  var theme = saved === 'light' || saved === 'dark'
+    ? saved
+    : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+  if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+  else root.removeAttribute('data-theme');
+})();
+</script>
 </head>
 <body>
 

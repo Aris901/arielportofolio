@@ -94,7 +94,9 @@ body {
   font-feature-settings: "kern" 1, "liga" 1;
   -webkit-font-smoothing: antialiased;
   line-height: 1.65;
-  transition: background 0.3s ease, color 0.3s ease;
+  /* The longhand, so the transition animates the one property that changes
+     rather than every layer the background shorthand carries. */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 img { max-width: 100%; display: block; }

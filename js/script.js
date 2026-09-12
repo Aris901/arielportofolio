@@ -28,29 +28,40 @@
     );
   }
 
-  // Dark is the default because the aurora backdrop is built for a dark
-  // surface. The attribute is already on <html> to avoid a flash of the
-  // light theme before this runs, so only an explicit 'light' choice
-  // removes it.
-  const savedTheme = localStorage.getItem('portfolio-theme');
-  if (savedTheme === 'light') {
-    root.removeAttribute('data-theme');
-  } else {
-    root.setAttribute('data-theme', 'dark');
+  // The theme itself was already resolved by the inline script in <head>,
+  // before the first paint. Re-deciding it here would undo that, and would
+  // override the visitor's operating-system preference with a hardcoded
+  // default. This only reads the result and wires the toggle.
+  const currentTheme = () => (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+  syncThemeLabel(currentTheme());
+
+  function applyTheme(theme) {
+    if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+    else root.removeAttribute('data-theme');
+    syncThemeLabel(theme);
   }
-  syncThemeLabel(savedTheme === 'light' ? 'light' : 'dark');
 
   themeToggle.addEventListener('click', function () {
-    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    const next = current === 'dark' ? 'light' : 'dark';
-    if (next === 'dark') {
-      root.setAttribute('data-theme', 'dark');
-    } else {
-      root.removeAttribute('data-theme');
-    }
-    syncThemeLabel(next);
-    localStorage.setItem('portfolio-theme', next);
+    const next = currentTheme() === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    // Choosing is what makes it stick. Until then the system decides.
+    try { localStorage.setItem('portfolio-theme', next); } catch (e) { /* private mode */ }
   });
+
+  // Follow the system while the visitor has expressed no preference of their
+  // own — someone on an automatic day/night schedule should see the page turn
+  // with everything else, not stay where it was when they arrived.
+  if (window.matchMedia) {
+    const scheme = window.matchMedia('(prefers-color-scheme: light)');
+    const onSchemeChange = (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem('portfolio-theme'); } catch (err) { /* private mode */ }
+      if (saved === 'light' || saved === 'dark') return;
+      applyTheme(e.matches ? 'light' : 'dark');
+    };
+    if (scheme.addEventListener) scheme.addEventListener('change', onSchemeChange);
+    else if (scheme.addListener) scheme.addListener(onSchemeChange);
+  }
 
   // ---- mobile nav toggle ----
   navToggle.addEventListener('click', function () {
